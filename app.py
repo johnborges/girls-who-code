@@ -134,7 +134,7 @@ def new_post():
 @login_required
 def remove_post(post_id):
     post_id = id
-    post = Post.query.filter_by(id=post_id).first();
+    post = Post.query.filter_by(id=post_id).first()
     if post is None:
         abort(400) #post doesn't exists
     if not post.author_id is g.user.id:
