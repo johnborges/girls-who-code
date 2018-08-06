@@ -221,7 +221,7 @@ def app_login():
     if not user or not verify_password(password, user.hashed_pw):
         abort(401)
     token = generate_auth_token(user.id, 600)
-    resp = make_response(jsonify({'auth' : token}))
+    resp = make_response(jsonify({'auth' : str(token)}))
     resp.set_cookie('login_token', token);
     return resp
 
