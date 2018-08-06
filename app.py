@@ -11,8 +11,8 @@ from functools import wraps
 from flask_cors import CORS, cross_origin
 
 # initialization
-app = Flask(__name__, supports_credentials=True)
-cors = CORS(app)
+app = Flask(__name__)
+cors = CORS(app, supports_credentials=True)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
