@@ -129,6 +129,17 @@ def new_post():
     db.session.add(post)
     db.session.commit()
     return (jsonify({'post': post.id}), 201)
+  
+@app.route('/api/posts/<int:post_id>', methods=['DELETE'])
+@login_required
+def remove_post(post_id):
+    post_id = id
+    post = Post.query.filter_by(id=post_id).first();
+    if post is None:
+        abort(400) #post doesn't exists
+    db.session.delete(post)
+    db.session.commit()
+    return (jsonify({'deleted': True}))
 
 @app.route('/api/users/<int:id>/posts', methods=['GET'])
 @login_required
