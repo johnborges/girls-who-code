@@ -137,13 +137,16 @@ def remove_post(post_id):
     post = Post.query.filter_by(id=post_id).first();
     if post is None:
         abort(400) #post doesn't exists
+    if post.author_id not g.user.id:
+        abort(401)
     db.session.delete(post)
     db.session.commit()
     return (jsonify({'deleted': True}))
 
-@app.route('/api/users/<int:id>/posts', methods=['GET'])
+@app.route('/api/posts', methods=['GET'])
 @login_required
-def get_posts(id):
+def get_posts():
+    id = g.user.id
     posts = Post.query.filter(Post.author_id==id);
     return (jsonify({'posts': [i.serialize for i in posts ]}))
 
