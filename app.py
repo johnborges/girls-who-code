@@ -137,7 +137,7 @@ def remove_post(post_id):
     post = Post.query.filter_by(id=post_id).first();
     if post is None:
         abort(400) #post doesn't exists
-    if post.author_id not g.user.id:
+    if not post.author_id is g.user.id:
         abort(401)
     db.session.delete(post)
     db.session.commit()
