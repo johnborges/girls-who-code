@@ -103,8 +103,9 @@ def login_required(f):
 def auth():
     token = request.cookies.get('login_token')
     if not token:
-        return False
-        # first try to authenticate by token
+        token = request.args.get('auth')
+        if not token:
+            return False
     user = verify_auth_token(token)
     if not user:
         return False
@@ -113,7 +114,7 @@ def auth():
 
 @app.route('/api/posts', methods=['POST'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def new_post():
     body_text = request.json.get('body_text')
     author_id = g.user.id
@@ -128,14 +129,14 @@ def new_post():
 
 @app.route('/api/users/<int:id>/posts', methods=['GET'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_posts(id):
     posts = Post.query.filter(Post.author_id==id);
     return (jsonify({'posts': [i.serialize for i in posts ]}))
 
 @app.route('/api/me', methods=['GET'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_me():
     user = g.user
     return (jsonify({'user': user.serialize}))
@@ -143,7 +144,7 @@ def get_me():
 
 @app.route('/api/users')
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_all_users():
     users = User.query.all()
     return jsonify({
@@ -153,7 +154,7 @@ def get_all_users():
 
 @app.route('/api/users/<int:id>')
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_user(id):
     user = User.query.get(id)
     if not user:
@@ -162,7 +163,7 @@ def get_user(id):
 
 @app.route('/api/follows', methods=['POST'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def follow():
     id = g.user.id
     publisher_id=request.json.get('publisher_id')
@@ -176,7 +177,7 @@ def follow():
 
 @app.route('/api/follows', methods=['GET'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_follows():
     id = g.user.id
     user = User.query.get(id)
@@ -186,7 +187,7 @@ def get_follows():
 
 @app.route('/api/followers', methods=['GET'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_followers():
     id = g.user.id
     user = User.query.get(id)
@@ -196,7 +197,7 @@ def get_followers():
 
 @app.route('/api/follows/<int:publisher_id>', methods=['DELETE'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def stop_following(publisher_id):
     id = g.user.id
     statement = follows_table.delete().where(
@@ -207,7 +208,7 @@ def stop_following(publisher_id):
 
 @app.route('/api/feed', methods=['GET'])
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def get_feed():
     id = g.user.id
     user = User.query.get(id)
@@ -232,14 +233,14 @@ def app_login():
 
 @app.route('/api/logout')
 @login_required
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def app_logout():
     resp = make_response(jsonify({'success' : True}))
     resp.set_cookie('login_token', '', expires=0);
     return resp
 
 @app.route('/api/register', methods=['POST'])
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def new_user():
     username = request.json.get('username')
     password = request.json.get('password')
@@ -254,7 +255,7 @@ def new_user():
 
 
 @app.route('/')
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True, origin='glitch.me',headers=['Content- Type','Authorization'])
 def inded():
     return jsonify({'message': 'It lives!'})
 
