@@ -81,7 +81,7 @@ def hash_password(password):
 def verify_password(password, hashed):
     return pwd_context.verify(password, hashed)
 
-def generate_auth_token(user_id, expiration=600):
+def generate_auth_token(user_id, expiration=6000):
     s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
     return s.dumps({'id': user_id})
 
@@ -221,7 +221,7 @@ def app_login():
     user = User.query.filter_by(username=username).first()
     if not user or not verify_password(password, user.hashed_pw):
         abort(401)
-    token = generate_auth_token(user.id, 600)
+    token = generate_auth_token(user.id, 6000)
     resp = make_response(jsonify({'auth' : str(token)}))
     resp.set_cookie('login_token', token);
     return resp
