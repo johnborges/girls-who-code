@@ -9,9 +9,6 @@ from itsdangerous import (TimedJSONWebSignatureSerializer
 from sqlalchemy import and_
 from functools import wraps
 
-from dotenv import load_dotenv
-load_dotenv()
-
 # initialization
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
