@@ -138,7 +138,7 @@ def remove_post(id):
         abort(400) #post doesn't exists
     if not post.author_id is g.user.id:
         abort(401)
-    Post.query.get(id).delete()
+    db.session.delete(post)
     db.session.commit()
     return (jsonify({'deleted': True}))
 
