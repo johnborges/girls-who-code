@@ -21,8 +21,8 @@ Running
 
 To run the server use the following command:
 
-    (venv) $ python api.py
-     * Running on http://127.0.0.1:8080/
+    (venv) $ python app.py
+     * Running on http://127.0.0.1:5000/
      * Restarting with reloader
 
 Then from a different terminal window you can send requests.
