@@ -209,6 +209,7 @@ def get_feed():
     if not user:
         abort(400)
     follow_ids = [i.id for i in user.follows]
+    follow_ids.append(id)
     posts = Post.query.filter(Post.author_id.in_(follow_ids)).order_by(Post.created_on.desc()).all()
     return jsonify({'feed': [i.serialize for i in posts] })
 
