@@ -14,7 +14,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 cors = CORS(app)
 app.config['SECRET_KEY'] = '9ecb6f73d78311d4d33c19f193cd2dbd523b0bac61af333eab3c896f3582fe10'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://vssspclulghodp:cd8a620ae72cb23e46c8be130f7609e0480fddd8e4f7f9d4e7791849d629187e@ec2-107-21-102-221.compute-1.amazonaws.com:5432/dbicm15oeo3977'
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
