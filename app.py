@@ -13,7 +13,7 @@ from flask_cors import CORS, cross_origin
 # initialization
 app = Flask(__name__)
 cors = CORS(app)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = '9ecb6f73d78311d4d33c19f193cd2dbd523b0bac61af333eab3c896f3582fe10'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
